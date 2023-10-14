@@ -5,7 +5,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 import tkinter as tk
 import random
-from openpyxl.cell import _writer
+#from openpyxl.cell import _writer
 
 
 winning_Numbers_Sort_lotto=['Lotto649Control_history_dlQuery_No1_','Lotto649Control_history_dlQuery_No2_',
@@ -100,6 +100,9 @@ def generate_unique_numbers():
             print("別買了，認真工作吧!")
 # 這個函數用來顯示線型圖表視窗
 def plot_graph():
+    #轉換所引為整數
+    df.index = df.index.astype(int)
+    
     # 創建一個新的Tkinter視窗
     new_window = tk.Toplevel(app)
     new_window.title("Sum Over Time Graph")
@@ -108,7 +111,9 @@ def plot_graph():
     ax = fig.add_subplot(111)
     
     df['6顆號碼加總'].plot(kind='line', title='Sum Over Time', xlabel='Index', ylabel='Sum', ax=ax)
-    ax.set_xticks(range(10))
+    ax.set_xticks(df.index)# 使用 DataFrame 的索引來設置x軸的刻度
+    ax.invert_xaxis()#反轉
+    #ax.set_xticklabels(range(1,10)) # 使標籤從1開始
     
     canvas = FigureCanvasTkAgg(fig, master=new_window)  # 創建canvas將figure添加到Tkinter視窗中
     canvas.draw()
