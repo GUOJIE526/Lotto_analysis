@@ -56,6 +56,7 @@ df.iloc[:, 0:6] = df.iloc[:, 0:6].astype(int)
 sums = df.iloc[:,0:6].sum(axis=1)
 #在第7列中存儲加總結果
 df['6顆號碼加總'] = sums  # 新增第7列為Sum
+
 # 輸出到 Excel
 output_filename = "lotto_results.xlsx"
 df.to_excel(output_filename, engine='openpyxl', index=False)
@@ -101,7 +102,9 @@ def generate_unique_numbers():
 # 這個函數用來顯示線型圖表視窗
 def plot_graph():
     #轉換所引為整數
-    df.index = df.index.astype(int)
+    new_indices = [1,2,3,4,5,6,7,8,9,10]
+    df.index = new_indices
+    #df.index = df.index.astype(int)
     
     # 創建一個新的Tkinter視窗
     new_window = tk.Toplevel(app)
@@ -112,7 +115,7 @@ def plot_graph():
     
     df['6顆號碼加總'].plot(kind='line', title='Sum Over Time', xlabel='Index', ylabel='Sum', ax=ax)
     ax.set_xticks(df.index)# 使用 DataFrame 的索引來設置x軸的刻度
-    ax.invert_xaxis()#反轉
+    #ax.invert_xaxis()#反轉
     #ax.set_xticklabels(range(1,10)) # 使標籤從1開始
     
     canvas = FigureCanvasTkAgg(fig, master=new_window)  # 創建canvas將figure添加到Tkinter視窗中
